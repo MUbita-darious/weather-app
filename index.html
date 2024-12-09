@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather App</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="keywords" content="Weather Forecast | Weather App |    ">
+    <meta name="Author" content="Darius Haabasimbi">
+    <meta name="Description" content="Weather Application Forecast For Central Province" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="./css/fontawesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="./js/jquery.js"></script>
+    <style>
+        #banner
+        {
+            width: 100%;
+            background-image: url('./assets/a.jpg');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            object-fit: cover;
+            background-attachment: fixed;
+        }
+        #banner .banner-fader 
+        {
+            height: 80vh;
+            background: rgb(0, 0, 0);
+            opacity: 0.745437;       
+        }
+        #marketeers
+        {
+            width: 100%;
+            background-image: url('./images/3.jpg');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            object-fit: cover;
+            height: 70vh;
+            background-attachment: fixed;
+        }
+        #marketeers-2
+        {
+            width: 100%;
+            background-image: url('./images/livestock.jpg');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            object-fit: cover;
+            background-attachment: fixed;
+            height: 70vh;
+        }
+        #locations 
+        {
+            width: 100%;
+            background-image: url('./images/marketeers.jpg');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            object-fit: cover;
+            background-attachment: fixed;
+        }
+        .highlights-cover
+        {
+            width: 100%;
+            background-color: black;
+        }
+        .highlights-cover .highlight-card
+        {
+            width: 100%;
+            background-color: rgb(36, 35, 35);
+        }
+        .highlight-fader
+        {
+            padding-top: 15%;
+            padding-bottom: 15%;
+            color: rgb(238, 238, 238);
+            background-color: black;
+            margin: 0;
+            opacity: 0.787878;
+        }
+        .nav-menu-slide
+        {
+            width: 100%;
+            background-color: rgb(0, 89, 255);
+        }
+        .footer-wraper 
+        {
+            text-transform: uppercase;
+            background: url('./assets/a.jpg');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <header class="banner" id="banner">
+            <div class="banner-fader">
+                <div class="main-nav-bg">
+                    <div class="container">
+                        <nav class="main-nav">
+                            <div class="icon-logos">
+                                <a href="index.html" class="logo">
+                                    <i class="fa fa-home fa-3x"></i>
+                                </a>
+                            </div>
+                            <div class="nav-menu">
+                                <ul>
+                                    <li class="nav-item"><a href="index.html?#current-city">My City</a></li>
+                                    <li class="nav-item"><a href="index.html?#five-days-forecast">5 Days Forecast</a></li>
+                                    <li class="nav-item"><a href="index.html?#about">About</a></li>
+                                    <li class="nav-item"><a href="index.html?#weather-conditions">Saved Cities</a></li>
+                                    <li class="nav-item nav-item-icon">
+                                        <a href="tel:"><i class="fa fa-phone"></i></a>
+                                    </li>
+                                    <li class="nav-item nav-item-icon">
+                                        <a href="mailto:"><i class="fa fa-envelope"></i></a>
+                                    </li>
+                                    <li class="mob-nav-menu"><a><i class="fa fa-bars"></i></a></li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="banner-text-wrap">
+                            <div class="banner-text">
+                                <h2 class="banner-text-title">SOLWEZI PROVINCE WEATHER APP</h2>
+                                <p class="banner-text-desc">
+                                    Solwezi is the provincial capital of the North-Western Province of Zambia, 
+                                    located in the northwest part of the country. It is a key urban center that 
+                                    has seen significant growth in recent years, driven largely by the mining industry.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row search-results">
+                        <div class="search-canvas shadow">
+                            <div class="err-display" id="err-display"></div>
+                            <form action="" method="get">
+                                <input type="text" 
+                                        name="search" 
+                                        id="search" 
+                                        class="form-control"
+                                        placeholder="City/Town Name..." />
+                                <button type="button"  
+                                        id="search-btn" 
+                                        class="form-control btn btn-primary btn-sm weather-button">
+                                        Search Weather <i class="fa fa-search"></i>
+                                </button>
+                                <button type="button" 
+                                        id="save-now" 
+                                        class="form-control btn btn-primary btn-sm weather-button">
+                                        Save City  <i class="fa fa-heart"></i>
+                                </button>
+                                <button type="button" 
+                                        id="conver-units-btn" 
+                                        class="form-control btn btn-primary btn-sm weather-button">
+                                        Change Heat Units  <i class="fa fa-thermometer"></i>
+                                </button>
+                                <span class="city-to-save"></span>
+                            </form>
+                        </div>
+                        <div class="searched-canvas">
+                            <div class="result">
+                                <i class="fa fa-cloud-sun"></i>
+                                <span id="temp-level" class="condition-level">0</span>
+                                <strong>Temperature</strong>
+                            </div>
+                            <div class="result">
+                                <i class="fa fa-cloud"></i>
+                                <span id="cloudy-level" class="condition-level">0</span>
+                                <strong>Cloudy</strong>
+                            </div>
+                            <div class="result">
+                                <i class="fa fa-water"></i>
+                                <span id="pressure-level" class="condition-level">0</span>
+                                <strong>Pressure</strong>
+                            </div>
+                            <div class="result">
+                                <i class="fa fa-paper-plane"></i>
+                                <span id="windy-level" class="condition-level">0</span>
+                                <strong>Wind</strong>
+                            </div> 
+                            <div class="result">
+                                <i class="fa fa-cloud-sun"></i>
+                                <span id="humidity-level" class="condition-level">0</span>
+                                <strong>Humidity</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="sp-manager">
+            <section class="services sect-pd" id="five-days-forecast">
+                <div class="container">
+                    <div class="vss-text-title">
+                        <h3 class="vss-title">FIVE DAY AHEAD WEATHER FORECAST</h3>
+                        <p class="vss-title-desc">
+                            Clear and bright, the skies are blue,
+                            Perfect weather just for you!
+                            Not a cloud in sight today,
+                            It’s the forecast we can.
+                        </p>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row justify-content-center" id="five-day-focus-wrapper"></div>
+                </div>
+            </section>
+            <section class="highlights highlights-cover" id="current-city">
+                <div class="highlight-fader">
+                    <div class="container">
+                        <div class="vss-text-title">
+                            <h3 class="vss-title">WEATHER IN MY CURRENT LOCATION</h3>
+                            <p class="vss-title-desc">
+                                Find out, get know, get to learn about the weather in your 
+                                locality.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="hightlights-wrap row-sp-evn">
+                            <div class="highlight-card shadow">
+                                <i class="fa fa-cloud-sun"></i>
+                                <p class="highlight-card-desc">
+                                    <strong><h4>Temperature<br> Measure</h4></strong>
+                                    <h1 id="current-city-temp-level" class="condition-level current-city-level">0</h1>
+                                </p>
+                            </div>
+                            <div class="highlight-card shadow">
+                                <i class="fa fa-cloud-rain"></i>
+                                <p class="highlight-card-desc">
+                                    <strong><h4>Humidity <br> Measure</h4></strong>
+                                    <h1 id="current-city-humidity-level" class="condition-level current-city-level">0</h1>
+                                </p>
+                            </div>
+                            <div class="highlight-card shadow">
+                                <i class="fa fa-paper-plane"></i>
+                                <p class="highlight-card-desc">
+                                    <strong><h4>Wind <br> Measure</h4></strong>
+                                    <h1 id="current-city-windy-level" class="condition-level current-city-level">0</h1>
+                                </p>
+                            </div>
+                            <div class="highlight-card shadow">
+                                <i class="fa fa-cloud-rain"></i>
+                                <p class="highlight-card-desc">
+                                    <strong><h4>Cloudy <br> Measure</h4></strong>
+                                    <h1 id="current-city-cloudy-level" class="condition-level current-city-level">0</h1>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="about-wrap" id="about">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 about-desc">
+                            <div class="lead about-dsc-text"  >
+                                <h2><strong style="color:white;">Solwezi Weather App</strong></h2>
+                                <p style="color:white;">
+                                    Solwezi weather app is a web application designed to provide users with real-time weather 
+                                    information, forecasts, and other meteorological data for a specific location or locations in Solwezi. 
+                                    The app is available for smartphones, tablets, and sometimes smartwatches, and 
+                                    they give you access to a wide range of weather-related information. 
+                                    <br>
+                                    <br>
+                                    This weather app provides notifications for extreme weather events such as thunderstorms, hurricanes, tornadoes, 
+                                    or heatwaves, helping users stay safe.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="makerteers" id="weather-conditions">
+                <div class="marketeer-fader">
+                    <div class="mkr-intr">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 wvb-title-area text-center cdf-btns">
+                                    <h6 class="display-6 mkr-title text-center">
+                                        <b class="customer-banner">WEATHER CONDITIONS DETECTOR</b>
+                                    </h6>
+                                    <p class="lead mkr-desc text-center customer-client-desc">
+                                        The Weather conditions detector apps pulls it's data from weather stations, satellites, and 
+                                        radar systems that are monitored by meteorological organizations. This information is processed 
+                                        into forecasts using advanced computer models, which predict weather patterns based on a variety 
+                                        of factors like air pressure, wind direction, and temperature trends. Therefore, you can request 
+                                        for an email with all this information
+                                    </p>
+                                    <a href="" class="btn btn-success btn-lg customer-btn"><i class="fa fa-envelope"></i> Send Me Detected Weather</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <footer class="footer-wraper">
+                <div class="footer-fader">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 text-left">
+                                <div class="footer-contact" style="margin-bottom:20%;">
+                                    <h6>SERVICES</h6>
+                                    <ul class="list-group">
+                                        <li><a href="index.html">Home</a></li>
+                                        <li><a href="index.html?#current-city">My City</a></li>
+                                        <li><a href="index.html?#five-days-forecast">Five Days Forecast</a></li>
+                                        <li><a href="index.html?#about">About</a></li>
+                                        <li><a href="index.html?#weather-conditions">Saved Cities</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 text-left">
+                                <div class="footer-contact" style="margin-bottom:20%;">
+                                    <h6>REACH US</h6>
+                                    <ul class="list-group">
+                                        <li><a href="">Toll Free Line</a></li>
+                                        <li><a href="">Book Appointment</a></li>
+                                        <li class="nav-item"><a href="https://www.icuzambia.net">ICU Zambia</a></li>
+                                        <li class="nav-item"><a href="https://www.zrdc.org">ZRDC</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 text-left">
+                                <div class="footer-contact" style="margin-bottom:20%;">
+                                    <h6>PRODUCTS</h6>
+                                    <ul class="list-group">
+                                        <li class="nav-item-2"><a href="index.html?#marketeers">Weather Email</a></li>
+                                        <li class="nav-item-2"><a href="index.html?#marketeers"></a>Advertising</li>
+                                        <li class="nav-item-2"><a href="index.html?#marketeers">Consultancy</a></li>
+                                        <li class="nav-item-2"><a href="index.html?#marketeers">Engagement Programs</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <div class="signature text-center">
+                                    &copy;2024.All Rights Reserved. Darious Haabasimbi Mubita, SIN: 2007296305, BSc. Information Security And Computer Forensics</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </main>
+    <div class="nav-menu-slide">
+        <div class="nm-slide-title row-sp-btn">
+            <h4><strong>MOBILE MENU</strong></h4>
+            <span class="exit-slide-menu">x</span>
+        </div>
+        <ul>
+            <li class="nav-item-2"><a href="index.html">Home</a></li>
+            <li class="nav-item-2"><a href="index.html?#current-city">My City</a></li>
+            <li class="nav-item-2"><a href="index.html?#five-days-forecast">Five Days Forecast</a></li>
+            <li class="nav-item-2"><a href="index.html?#about">About</a></li>
+            <li class="nav-item-2"><a href="index.html?#weather-conditions">Saved Cities</a></li>
+        </ul>
+    </div>
+    <script src="./js/menu.js" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+        /****
+         * 
+         * * Save user current city latitude, 
+         * * ->longitude and 
+         * * ->city name
+         * 
+         * */
+        let coords = {
+            "lat":"",
+            "lng":"",
+            "city":""
+        };
+
+        /****
+         * 
+         * * Automated AJAX request to fetch current city data 
+         * * and update records in the JS object data structure 
+         * * above, using Gelocation Database API
+         * 
+         * */
+        $.ajax({
+            type: "GET",
+            url: "https://geolocation-db.com/json/",
+            async: true,
+            success: function(data){
+                let location = JSON.parse(data);
+                coords.lat = location.latitude;
+                coords.lng = location.longitude;
+                coords.city = location.city;
+                setTimeout(() => {
+                    currentCityWeather();
+                    fiveDayWeatherForecast(coords);
+                }, 5000);
+            },                     
+            error: function(err){
+                $("#err-display").html("<div class='err-notice-bad'>Network failure detected, to fetch weather information, refresh your browser.</div>");      
+            } 
+        });  
+
+        /****
+         * 
+         * * OPEN WEATHER MAP API IN USE BELOW
+         * * Fetching current user city weather information
+         * * Obtains city; latitude, longitude and city name from 
+         *   Object updated by Geolocation API
+         * 
+         * */
+        function currentCityWeather(){
+            const lat = coords.lat;
+            const lng = coords.lng;
+            const current_city = coords.city;
+            if(lat!="" && lng!=""){
+                $.ajax({
+                    type: "GET",
+                    url: "https://api.openweathermap.org/data/3.0/onecall?lat="+lat+"&lon="+lng+"&appid=b0fbe96cfe47ba62973a33ed3abfb1f1",
+                    async: true,
+                    success: function(r){
+                        if(r["current"]["temp"]!="" && r["current"]["clouds"]!="" && r["timezone"]!="") {
+                            $("#temp-level").html("<span id='searched-city-temp'><span id='changeable-temp'>"+r["current"]["temp"]+"</span><sup>o</sup>C</span>");
+                            $("#cloudy-level").html("<span>"+r["current"]["clouds"]+"<sup>oktas</sup></span>");
+                            $("#pressure-level").html("<span>"+r["current"]["pressure"]+"<sup>atm</sup></span>");
+                            $("#humidity-level").html("<span>"+r["current"]["humidity"]+" g/m<sup>2</sup</span>");
+                            $("#windy-level").html("<span>"+r["current"]["wind_deg"]+"<sup>km/h</sup</span>");
+                            let cityNameArr = r["timezone"].split("/");
+                            $(".city-to-save").html("Weather For: "+cityNameArr[1]);
+                            $("#err-display").hide(200);
+                            $("#current-city-temp-level").html("<span>"+r["current"]["temp"]+"<sup>o</sup>C</span>");
+                            $("#current-city-cloudy-level").html("<span>"+r["current"]["clouds"]+"<sup>oktas</sup></span>");
+                            $("#current-city-pressure-level").html("<span>"+r["current"]["pressure"]+"<sup>atm</sup></span>");
+                            $("#current-city-humidity-level").html("<span>"+r["current"]["humidity"]+" g/m<sup>2</sup></span>");
+                            $("#current-city-windy-level").html("<span>"+r["current"]["wind_deg"]+"<sup>km/h</sup></span>");
+                            swapBgImageOnWeatherChange(r["current"]["weather"][0]["main"]);
+                        } else $("#err-display").html("<div class='err-notice'>Failed to fetch weather updates, restart application.</div>");
+                    }
+                });  
+            } else $("#err-display").html("<div class='err-notice'>Loading weather for your city, be patient...</div>");
+        }
+        currentCityWeather(coords);
+
+        /****
+         * 
+         * * 
+         * * Changes BANNER image to suit weather change
+         * * Adaptive to updates made by the OpenWeather API
+         * *  
+         * 
+         * */
+        function swapBgImageOnWeatherChange(weatherCondition){  
+            switch(weatherCondition){
+                case "Clear":
+                    $("#banner").css("background-image", 'url("./assets/a.jpg")');
+                    break;
+
+                case "Clouds":
+                    $("#banner").css("background-image", 'url("./assets/b.jpg")');
+                    break;
+
+                case "Rain":
+                    $("#banner").css("background-image", 'url("./assets/d.jpg")');
+                    break;
+                default:
+                    $("#banner").css("background-image", 'url("./assets/a.jpg")');
+                    break;
+            }
+        }
+
+         /****
+         * 
+         * * 
+         * * Five days weather Focus Update 
+         * * Uses OpenWeatherMapAPI Call
+         * *  
+         * 
+         * */
+        function fiveDayWeatherForecast(coords){
+            const lat = coords.lat;
+            const lng = coords.lng;
+            const current_city = coords.city;
+            if(lat!="" && lng!=""){
+                $.ajax({
+                    type: "GET",
+                    url: "https://api.openweathermap.org/data/3.0/onecall?lat="+lat+"&lon="+lng+"&appid=b0fbe96cfe47ba62973a33ed3abfb1f1",          
+                    async: true,
+                    success: function(r){
+                        let focus = r.daily;
+                        let fivedaysupdate = "";
+                        for (const day in focus) {
+                            var focusDate = new Date(focus[day]["dt"] * 1000).toLocaleDateString();
+                            fivedaysupdate+='<div class="five-day-card col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4"><div class="icons"><i class="fa fa-cloud-sun"></i></div><h5 class="service-name-desc"><div class="service-title">'+focusDate+'</div><h5 class="five-day-desc" style="text-align:center;">'+focus[day]["summary"]+'</h5><div class="service-desc"><span class="five-day-update"><i class="fa fa-sun"></i> <span id="sun-temperature">'+focus[day]["temp"]["max"]+'</span></span><span class="five-day-update"><i class="fa fa-cloud-sun"></i> <span id="sun-humidity">'+focus[day]["humidity"]+'</span></span><span class="five-day-update"><i class="fa fa-cloud-sun"></i> <span id="sun-cloudy">'+focus[day]["clouds"]+'</span></span><span class="five-day-update"><i class="fa fa-cloud-rain"></i><span id="sun-wind">'+focus[day]["wind_speed"]+'</span></span></div></h5></div>';
+                        }$("#five-day-focus-wrapper").html(fivedaysupdate);
+                    }
+                });  
+            } else $("#err-display").html("<div class='err-notice'>Loading five days weather forecast, you will be updated</div>");
+        }
+
+        
+        /****
+         * 
+         * * 
+         * * Receives city name from UI/UX
+         * * Sends query to OpenWeatherMapAPI
+         * * Next, updates UI/UX
+         * *  
+         * 
+         * */
+        $(function(){
+            $("#search-btn").click(function(){
+                const cityNameq = $("#search").val();
+                if(cityNameq!=""){
+                    $.ajax({
+                        type: "GET",
+                        url: "https://api.openweathermap.org/data/2.5/weather?q="+cityNameq+"&appid=b0fbe96cfe47ba62973a33ed3abfb1f1",
+                        async: true,
+                        success: function(r){
+                            console.log(r);
+                            if(r["main"]["temp"]!="" && r["clouds"]["all"]!="" && r["timezone"]!="") {
+                                $("#temp-level").html("<span id='searched-city-temp'><span class='changeable-temp'>"+r["main"]["temp"]+"</span><sup>o</sup>C</span>");
+                                $("#cloudy-level").html("<span>"+r["clouds"]["all"]+"<sup>oktas</sup></span>");
+                                $("#pressure-level").html("<span>"+r["main"]["pressure"]+"<sup>atm</sup></span>");
+                                $("#humidity-level").html("<span>"+r["main"]["humidity"]+"g/m<sup>2</sup></span>");
+                                $("#windy-level").html("<span>"+r["wind"]["deg"]+"<sup>km/h</sup></span>");
+                                swapBgImageOnWeatherChange(r["current"]["weather"][0]["main"]);
+                                let cityNameSearched = r["name"];
+                                $(".city-to-save").html("Weather For: "+cityNameSearched);
+                                $("#err-display").hide(200);
+                            } else $("#err-display").html("<div class='err-notice'>Check city name, and restart the application.</div>");
+                        },
+                        error: function(err){
+                            $("#err-display").html("<div class='err-notice-bad'>Network failure, restart application.</div>");      
+                        } 
+                    });   
+                } else $("#err-display").html("<div clas='err-notice'>Enter City Name To Search</div>");
+            });
+        });
+
+        /****
+         * 
+         * * 
+         * * The following saves city weather into Local Storage 
+         * * Uses Browser Default API
+         * *  
+         * 
+         * */
+        $(function(){
+            $("#save-now").click(function(){
+                alert();
+                const isCityReady = $("#city-to-save").val();
+                const cityTemp = $("#searched-city-temp").val();
+                if(isCityReady!=""){
+                    if(typeof(Storage)){
+                        localStorage.setItem("1", isCityReady+" is "+cityTemp + "Celsius");
+                    } else $("#err-display").html("<div class='err-notice'>This browser does not support local storage, update or use another browser like Operamini, Firefox or Google Chrome</div>");
+                } else $("#err-display").html("<div class='err-notice'>You can only save a city after searching</div>");          
+            });
+        });
+    
+        
+        /****
+         * 
+         * * 
+         * * Gets temperature records, converts to fahrenheit
+         * * Next, updates temperature Display on the UI/UX
+         * *  
+         * 
+         * */
+        $(function(){
+            $("#conver-units-btn").click(function(){
+                let cityCurrTemp = $("#changeable-temp").text();
+                if(cityCurrTemp!=""){
+                    let f = (cityCurrTemp * (9/5)) + 32;
+                    const fahrenheit = Math.round(f,2);
+                    $("#temp-level").html("<span><span class='changeable-temp'>"+fahrenheit+"</span><sup>o</sup>F</span>");
+                    $("#current-city-temp-level").html("<span><span class='changeable-temp'>"+fahrenheit+"</span><sup>o</sup>F</span>");
+                    $("#err-display").html("<div class='err-notice'>Temperature Units Converted</div>");
+                    $("#err-display").fadeOut(5000);
+                } else $("#err-display").html("<div class='err-notice'>Can only convert if temperature is given</div>");  
+                                   
+            });
+        });
+       
+    </script>
+</body>
+</html>
